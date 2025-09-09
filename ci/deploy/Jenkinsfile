@@ -80,6 +80,12 @@ pipeline {
         stage('Prepare Config') {
             steps {
                 script {
+                    withCredentials([file(credentialsId: 'secret-file-vpn', variable: 'SECRET_FILE')]) {
+                        sh """
+                            mkdir -p ${params.SERVICE}
+                            cp "\$SECRET_FILE" "${params.SERVICE}/.env"
+                        """
+                    }
                     writeFile file: 'inventory.ini', text: params.CONFIG
                 }
             }
