@@ -82,8 +82,7 @@ pipeline {
                 script {
                     withCredentials([file(credentialsId: 'secret-file-vpn', variable: 'SECRET_FILE')]) {
                         sh """
-                            mkdir -p ${params.SERVICE}
-                            cp "\$SECRET_FILE" "${params.SERVICE}/.env"
+                            cp "\$SECRET_FILE" ".env"
                         """
                     }
                     writeFile file: 'inventory.ini', text: params.CONFIG
