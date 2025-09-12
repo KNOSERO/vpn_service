@@ -1,3 +1,5 @@
+@Library('jenkins_shared_lib') _
+
 pipeline {
     agent {
         label 'home'
@@ -15,37 +17,14 @@ pipeline {
         stage('Init ENV') {
             steps {
                 script {
-                    def repoUrl = scm.getUserRemoteConfigs()[0].getUrl()
-                    repoUrl = repoUrl.replaceAll(/\.git$/, "")
-
-                    def parts = repoUrl.tokenize('/')
-                    env.ACCOUNT = parts[-2]
-                    env.REPO    = parts[-1]
-                    env.REPO_URL = repoUrl + ".git"
-
-                    echo "ACCOUNT=${env.ACCOUNT}"
-                    echo "REPO=${env.REPO}"
-                    echo "REPO_URL=${env.REPO_URL}"
+                    initEnv()
                 }
             }
         }
 
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM',
-                    userRemoteConfigs: [[
-                        name: 'origin',
-                        url: env.REPO_URL,
-                        credentialsId: env.CREDITS_ID,
-                        refspec: '+refs/heads/*:refs/remotes/origin/*'
-                    ]],
-                    branches: [[ name: "${env.BRANCH}" ]],
-                    extensions: [
-                        [$class: 'CloneOption', shallow: true, depth: 25, noTags: true, timeout: 240],
-                        [$class: 'PruneStaleBranch'],
-                        [$class: 'CleanBeforeCheckout']
-                    ]
-                ])
+                checkoutBranch("${env.BRANCH}")
             }
         }
 
@@ -53,24 +32,14 @@ pipeline {
             parallel {
                 stage('SSH key configuration') {
                     steps {
-                        withCredentials([sshUserPrivateKey(credentialsId: 'id_home_lab', keyFileVariable: 'SSH_KEY')]) {
-                            sh '''
-                                mkdir -p /root/.ssh
-                                cp "$SSH_KEY" /root/.ssh/id_home_lab
-                                chmod 600 /root/.ssh/id_home_lab
-                               '''
-                        }
+                        configureUserSSH()
                     }
                 }
 
                 stage('Init Submodules') {
                     steps {
                         script {
-                            sh '''
-                                git config --global url."https://github.com/".insteadOf "git@github.com:"
-                                git submodule sync --recursive
-                                git submodule update --init --recursive --remote
-                            '''
+                            initSubmodules()
                         }
                     }
                 }
