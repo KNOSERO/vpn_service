@@ -1,5 +1,5 @@
 #  VPN vanguard Service
-Vanguard VPN a solution providing secure and encrypted connections to the local network and remote access.
+Vanguard VPN a solution providing secure and encrypted connections to the local network and remote access
 
 [![Build Status](https://jenkins.ravcube.com/buildStatus/icon?job=PR%20Public/PR%20VPN%20Service&style=plastic)](https://jenkins.ravcube.com/job/PR%20Public/job/PR%20VPN%20Service/lastBuild/pipeline-overview/)
 [![License](https://img.shields.io/github/license/KNOSERO/vpn_service?style=plastic)](LICENSE)
