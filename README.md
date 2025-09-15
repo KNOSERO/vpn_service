@@ -1,8 +1,8 @@
 #  VPN vanguard Service
-Application deployment template for docker
+Vanguard VPN a solution providing secure and encrypted connections to the local network and remote access.
 
-[![Build Status](https://jenkins.ravcube.com/buildStatus/icon?job=PR%20Public/PR%20Template%20Service%20Docker&style=plastic)](https://jenkins.ravcube.com/job/PR%20Public/job/PR%20Template%20Service%20Docker/lastBuild/pipeline-overview/)
-[![License](https://img.shields.io/github/license/KNOSERO/template_service_k3s?style=plastic)](LICENSE)
+[![Build Status](https://jenkins.ravcube.com/buildStatus/icon?job=PR%20Public/PR%20VPN%20Service&style=plastic)](https://jenkins.ravcube.com/job/PR%20Public/job/PR%20VPN%20Service/lastBuild/pipeline-overview/)
+[![License](https://img.shields.io/github/license/KNOSERO/vpn_service?style=plastic)](LICENSE)
 [![Docker](https://img.shields.io/badge/Docker-Image-blue?logo=docker&style=plastic)](https://github.com/wg-easy/wg-easy/pkgs/container/wg-easy)
 
 -----
